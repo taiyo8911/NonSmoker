@@ -11,6 +11,9 @@
 		DABBDFE12A1EF8A900F06DA6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFE02A1EF8A900F06DA6 /* ContentView.swift */; };
 		DABBDFE32A1EF8AC00F06DA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DABBDFE22A1EF8AC00F06DA6 /* Assets.xcassets */; };
 		DABBDFE62A1EF8AC00F06DA6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DABBDFE52A1EF8AC00F06DA6 /* Preview Assets.xcassets */; };
+		DABBDFED2A1EF99E00F06DA6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */; };
+		DABBDFEF2A1EFFA500F06DA6 /* DateSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */; };
+		DABBDFF12A1F0E0500F06DA6 /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		DABBDFE02A1EF8A900F06DA6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DABBDFE22A1EF8AC00F06DA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DABBDFE52A1EF8AC00F06DA6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSettingView.swift; sourceTree = "<group>"; };
+		DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,9 @@
 			children = (
 				DABBDFDE2A1EF8A900F06DA6 /* NonSmokerApp.swift */,
 				DABBDFE02A1EF8A900F06DA6 /* ContentView.swift */,
+				DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */,
+				DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */,
+				DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */,
 				DABBDFE22A1EF8AC00F06DA6 /* Assets.xcassets */,
 				DABBDFE42A1EF8AC00F06DA6 /* Preview Content */,
 			);
@@ -137,8 +146,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DABBDFED2A1EF99E00F06DA6 /* SettingView.swift in Sources */,
 				DABBDFE12A1EF8A900F06DA6 /* ContentView.swift in Sources */,
+				DABBDFF12A1F0E0500F06DA6 /* RecordsView.swift in Sources */,
 				DABBDFDF2A1EF8A900F06DA6 /* NonSmokerApp.swift in Sources */,
+				DABBDFEF2A1EFFA500F06DA6 /* DateSettingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,9 +294,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = macya.dev.NonSmoker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -311,9 +326,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = macya.dev.NonSmoker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
