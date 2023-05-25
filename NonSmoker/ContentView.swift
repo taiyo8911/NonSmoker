@@ -28,8 +28,13 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            
             VStack {
+                // アプリ名
+                Text("NonSmoker")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+                
                 // 上部ボタン
                 NavigationLink(destination: SettingView()) {
                     Image(systemName: "gearshape.fill")
