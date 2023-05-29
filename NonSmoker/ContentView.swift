@@ -7,30 +7,46 @@
 
 import SwiftUI
 
+struct ShareSheet: UIViewControllerRepresentable {
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ShareSheet>) -> UIActivityViewController {
+        guard let image = takeScreenshot() else {
+            fatalError("スクリーンショットの取得に失敗しました。")
+        }
+
+        let text = "スクリーンショットを共有します。"
+        let items: [Any] = [text, image]
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return activityVC
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareSheet>) {
+    }
+
+    private func takeScreenshot() -> UIImage? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return nil
+        }
+
+        let renderer = UIGraphicsImageRenderer(bounds: window.bounds)
+        let image = renderer.image { _ in
+            window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+        }
+
+        return image
+    }
+}
+
+
 struct ContentView: View {
-    
-    // 配列を定義
-    let dataTitle = [
-        "MESSAGE",
-        "TIME",
-        "NUMBER",
-        "PRICE",
-        "LIFE",
-    ]
-    
-    var data = [
-        "hello",
-        "3days 12hour",
-        "10",
-        "300",
-        "1days",
-    ]
-    
+    // シェア画面表示フラグ
+    @State private var isShowingShareSheet = false
+        
     var body: some View {
         NavigationView {
             VStack {
                 // アプリ名
-                Text("NonSmoker")
+                Text("You're NonSmoker")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding()
@@ -46,96 +62,36 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                // データ表示
-                List {
-                    Text(dataTitle[0])
-                        .fontWeight(.bold)
-                        .listRowBackground(Color.green)
-                    
-                    Label(
-                        title: {
-                            Text(dataTitle[1] + ":")
-                                .fontWeight(.bold)
-                            Text(data[1])
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        },
-                        icon: {
-                            Image(systemName: "stopwatch")
-                        }
-                    )
-                    .listRowBackground(Color.green)
-                    
-                    Label(
-                        title: {
-                            Text(dataTitle[2] + ":")
-                                .fontWeight(.bold)
-                            Text(data[2])
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        },
-                        icon: {
-                            Image(systemName: "number")
-                        }
-                    )
-                    .listRowBackground(Color.green)
-                    
-                    
-                    Label(
-                        title: {
-                            Text(dataTitle[3] + ":")
-                                .fontWeight(.bold)
-                            Text(data[3])
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-
-                        },
-                        icon: {
-                            Image(systemName: "dollarsign")
-                        }
-                    )
-                    .listRowBackground(Color.green)
-                    
-                    Label(
-                        title: {
-                            Text(dataTitle[4] + ":")
-                                .fontWeight(.bold)
-                            Text(data[4])
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        },
-                        icon: {
-                            Image(systemName: "heart")
-                        }
-                    )
-                    .listRowBackground(Color.green)
-                }
+                DataView()
                 
-                // 下部ボタン
-                HStack {
-                     Button(action: {
-                         // ボタンを押した時の動作
-                         print("ScreenShot")
-                     }) {
-                         Text("ScreenShot")
-                     }
-                     .padding()
-                     
-                    
-                    Button(action: {
-                        // ボタンを押した時の動作
-                        print("twitter")
-                    }) {
-                        Text("Twitter")
-                    }
-                    .padding()
+                
+                // シェアボタン
+                Button(action: {
+                    // シェアシート表示フラグ
+                    isShowingShareSheet = true
+                }) {
+                    Text("Share")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 150, height: 50)
+                        .background(Color.blue)
+                        .cornerRadius(15.0)
                     
                 }
+                .padding()
+                
+            }
+            .sheet(isPresented: $isShowingShareSheet) {
+                ShareSheet()
             }
         }
-        
     }
 }
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

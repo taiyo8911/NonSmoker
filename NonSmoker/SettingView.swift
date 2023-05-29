@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SettingView: View {
+    // アラート表示のフラグ
+    @State private var showAlert = false
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -19,12 +22,27 @@ struct SettingView: View {
                         Text("カルテ設定")
                     }
                     // リセットボタン
-                    Button(action: {
-                        // リセット処理
-                    }) {
-                        Text("リセット")
-                            .foregroundColor(.red)
-                    }
+//                    Button(action: {
+//                        // リセット処理
+//                        showAlert = true
+//
+//                    }) {
+//                        Text("リセット")
+//                            .foregroundColor(.red)
+//                    }
+//                    .alert(isPresented: $showAlert) {
+//                        Alert(
+//                            title: Text("リセットしますか？"),
+//                            message: Text("リセットすると、全てのデータが削除されます。"),
+//                            dismissButton: .default(
+//                                Text("OK"),
+//                                action: {
+//                                    // OKボタンが押されたときの処理を追加
+//                                    print("OKボタンが押されました")
+//                                }
+//                            )
+//                        )
+//                    }
                 }
             }
             // タイトル

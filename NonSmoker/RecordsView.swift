@@ -8,34 +8,49 @@
 import SwiftUI
 
 struct RecordsView: View {
+    // 1日の本数
+    @State private var numberPerDay: Int = 12
+    
+    // 一箱の値段
+    @State private var pricePerBox: Int = 600
+    
     var body: some View {
-        VStack {
-            Text("カルテ設定")
-                .font(.title)
-                        
-            // 1日何本吸っていましたか？
-            Text("1日何本吸っていましたか？")
-                .font(.title2)
-            Text("4本")
-            
-            // 1箱の値段は？
-            Text("1箱の値段は？")
-                .font(.title2)
-            Text("500円")
-            
-            // 保存ボタン
-            Button(action: {
-                // 保存処理
-            }) {
-                Text("保存")
-                    .font(.title)
-                    .foregroundColor(Color.white)
-                    .frame(width: 200, height: 50)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+        NavigationView {
+            VStack {
+                Group {
+                    Text("1日何本吸っていましたか？")
+                        .font(.title2)
+                    
+                    Stepper(value: $numberPerDay, in: 1...99, step: 1) {
+                        Text("\(numberPerDay)本")
+                    }
+                    .padding()
+                    
+                    
+                    Text("一箱の値段は？")
+                        .font(.title2)
+                    
+                    Stepper(value: $pricePerBox, in: 200...990, step: 10) {
+                        Text("\(pricePerBox)円")
+                    }
+                    .padding()
+                }
+                
+                
+                // 保存ボタン
+                Button(action: {
+                    // 保存処理
+                }) {
+                    Text("保存")
+                        .font(.title)
+                        .foregroundColor(Color.white)
+                        .frame(width: 200, height: 50)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
             }
         }
-    
+        .navigationTitle("カルテ設定")
     }
 }
 

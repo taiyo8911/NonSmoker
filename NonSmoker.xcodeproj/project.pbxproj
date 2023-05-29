@@ -14,6 +14,7 @@
 		DABBDFED2A1EF99E00F06DA6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */; };
 		DABBDFEF2A1EFFA500F06DA6 /* DateSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */; };
 		DABBDFF12A1F0E0500F06DA6 /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */; };
+		DAE8EF1B2A2200D000E2C75C /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8EF1A2A2200D000E2C75C /* DataView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSettingView.swift; sourceTree = "<group>"; };
 		DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
+		DAE8EF1A2A2200D000E2C75C /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				DABBDFDE2A1EF8A900F06DA6 /* NonSmokerApp.swift */,
 				DABBDFE02A1EF8A900F06DA6 /* ContentView.swift */,
+				DAE8EF1A2A2200D000E2C75C /* DataView.swift */,
 				DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */,
 				DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */,
 				DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */,
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE8EF1B2A2200D000E2C75C /* DataView.swift in Sources */,
 				DABBDFED2A1EF99E00F06DA6 /* SettingView.swift in Sources */,
 				DABBDFE12A1EF8A900F06DA6 /* ContentView.swift in Sources */,
 				DABBDFF12A1F0E0500F06DA6 /* RecordsView.swift in Sources */,
