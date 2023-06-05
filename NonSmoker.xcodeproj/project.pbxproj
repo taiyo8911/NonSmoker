@@ -7,25 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA012DEC2A2DA406008EE048 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA012DEB2A2DA406008EE048 /* ShareSheetView.swift */; };
 		DABBDFDF2A1EF8A900F06DA6 /* NonSmokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFDE2A1EF8A900F06DA6 /* NonSmokerApp.swift */; };
 		DABBDFE12A1EF8A900F06DA6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFE02A1EF8A900F06DA6 /* ContentView.swift */; };
 		DABBDFE32A1EF8AC00F06DA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DABBDFE22A1EF8AC00F06DA6 /* Assets.xcassets */; };
 		DABBDFE62A1EF8AC00F06DA6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DABBDFE52A1EF8AC00F06DA6 /* Preview Assets.xcassets */; };
-		DABBDFED2A1EF99E00F06DA6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */; };
+		DABBDFED2A1EF99E00F06DA6 /* SettingItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFEC2A1EF99E00F06DA6 /* SettingItemsView.swift */; };
 		DABBDFEF2A1EFFA500F06DA6 /* DateSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */; };
-		DABBDFF12A1F0E0500F06DA6 /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */; };
+		DABBDFF12A1F0E0500F06DA6 /* RecordsSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBDFF02A1F0E0500F06DA6 /* RecordsSettingView.swift */; };
 		DAE8EF1B2A2200D000E2C75C /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8EF1A2A2200D000E2C75C /* DataView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA012DEB2A2DA406008EE048 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		DABBDFDB2A1EF8A900F06DA6 /* NonSmoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NonSmoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABBDFDE2A1EF8A900F06DA6 /* NonSmokerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSmokerApp.swift; sourceTree = "<group>"; };
 		DABBDFE02A1EF8A900F06DA6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DABBDFE22A1EF8AC00F06DA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DABBDFE52A1EF8AC00F06DA6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		DABBDFEC2A1EF99E00F06DA6 /* SettingItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemsView.swift; sourceTree = "<group>"; };
 		DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSettingView.swift; sourceTree = "<group>"; };
-		DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
+		DABBDFF02A1F0E0500F06DA6 /* RecordsSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsSettingView.swift; sourceTree = "<group>"; };
 		DAE8EF1A2A2200D000E2C75C /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,9 +64,10 @@
 				DABBDFDE2A1EF8A900F06DA6 /* NonSmokerApp.swift */,
 				DABBDFE02A1EF8A900F06DA6 /* ContentView.swift */,
 				DAE8EF1A2A2200D000E2C75C /* DataView.swift */,
-				DABBDFEC2A1EF99E00F06DA6 /* SettingView.swift */,
+				DA012DEB2A2DA406008EE048 /* ShareSheetView.swift */,
+				DABBDFEC2A1EF99E00F06DA6 /* SettingItemsView.swift */,
 				DABBDFEE2A1EFFA500F06DA6 /* DateSettingView.swift */,
-				DABBDFF02A1F0E0500F06DA6 /* RecordsView.swift */,
+				DABBDFF02A1F0E0500F06DA6 /* RecordsSettingView.swift */,
 				DABBDFE22A1EF8AC00F06DA6 /* Assets.xcassets */,
 				DABBDFE42A1EF8AC00F06DA6 /* Preview Content */,
 			);
@@ -150,11 +153,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAE8EF1B2A2200D000E2C75C /* DataView.swift in Sources */,
-				DABBDFED2A1EF99E00F06DA6 /* SettingView.swift in Sources */,
+				DABBDFED2A1EF99E00F06DA6 /* SettingItemsView.swift in Sources */,
 				DABBDFE12A1EF8A900F06DA6 /* ContentView.swift in Sources */,
-				DABBDFF12A1F0E0500F06DA6 /* RecordsView.swift in Sources */,
+				DABBDFF12A1F0E0500F06DA6 /* RecordsSettingView.swift in Sources */,
 				DABBDFDF2A1EF8A900F06DA6 /* NonSmokerApp.swift in Sources */,
 				DABBDFEF2A1EFFA500F06DA6 /* DateSettingView.swift in Sources */,
+				DA012DEC2A2DA406008EE048 /* ShareSheetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

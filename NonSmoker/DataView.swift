@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct DataView: View {
-    
     // メッセージ
     let messages = [
         "禁煙は健康への第一歩！",
         "吸わない自分に誇りを！",
         "タバコを断って自由に！",
-        "禁煙は新たな始まり！",
+        "禁煙で新たな始まり！",
         "たばこなし、明るい未来！",
         "タバコを忘れて笑おう！",
         "禁煙で新しい自分へ！",
@@ -42,28 +41,31 @@ struct DataView: View {
         return String(format: "%02dd %02dh %02dm", days, hours, minutes)
     }
     
-    
-    
+        
     // 禁煙できた本数の計算
     private func calculateNonSmokingCount() -> Int {
         // 1日に吸っていた本数
         let numberPerDay = 12
+        
         // 経過日数
         let date = calendar.date(from: dateComponents) ?? Date()
         let days = calendar.dateComponents([.day], from: date, to: Date()).day ?? 0
-        // 禁煙本数
+        
         return numberPerDay * days
     }
     
     
     // 節約できた金額の計算
     private func money() -> Int {
-        // 一箱の値段
-        let price = 600
-        // 一箱の本数
+        // 1箱の値段
+        let pricePerBox = 600
+        
+        // 1箱の本数
         let numberPerBox = 20
+        
         // 1本あたりの値段
-        let pricePerOne = price / numberPerBox
+        let pricePerOne = pricePerBox / numberPerBox
+        
         // 節約金額
         return pricePerOne * calculateNonSmokingCount()
     }
@@ -86,14 +88,24 @@ struct DataView: View {
         return extendedLifeInHours
     }
     
+    // 1日の喫煙本数
+    @AppStorage("numberPerDay_key") var numberPerDay: Int = 9
+    
+    // 1箱の値段
+    @AppStorage("pricePerBox_key") var pricePerBox: Int = 599
+    
+    // 1箱の本数
+    @AppStorage("numberPerBox_key") var numberPerBox: Int = 19
+    
     
     var body: some View {
         // データ表示
-        List {
+        VStack {
             // メッセージをランダムに表示
             Text(messages.randomElement()!)
                 .fontWeight(.bold)
-                .listRowBackground(Color.green)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding()
             
             // 経過時間を表示
             Label(
@@ -104,10 +116,11 @@ struct DataView: View {
                 },
                 icon: {
                     Text("⏰")
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             )
-            .listRowBackground(Color.green)
-            
+            .padding()
+
             // 本数を表示
             Label(
                 title: {
@@ -117,10 +130,11 @@ struct DataView: View {
                 },
                 icon: {
                     Text("🚬")
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             )
-            .listRowBackground(Color.green)
-            
+            .padding()
+
             
             // 節約できた金額表示
             Label(
@@ -134,7 +148,8 @@ struct DataView: View {
                     Text("💲")
                 }
             )
-            .listRowBackground(Color.green)
+            .padding()
+
             
             // 延びた寿命を表示
             Label(
@@ -145,9 +160,10 @@ struct DataView: View {
                 },
                 icon: {
                     Text("💓")
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             )
-            .listRowBackground(Color.green)
+            .padding()
         }
     }
 }

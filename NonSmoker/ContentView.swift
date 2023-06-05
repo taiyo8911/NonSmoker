@@ -7,89 +7,82 @@
 
 import SwiftUI
 
-struct ShareSheet: UIViewControllerRepresentable {
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ShareSheet>) -> UIActivityViewController {
-        guard let image = takeScreenshot() else {
-            fatalError("スクリーンショットの取得に失敗しました。")
-        }
-
-        let text = "スクリーンショットを共有します。"
-        let items: [Any] = [text, image]
-        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        return activityVC
-    }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareSheet>) {
-    }
-
-    private func takeScreenshot() -> UIImage? {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first else {
-            return nil
-        }
-
-        let renderer = UIGraphicsImageRenderer(bounds: window.bounds)
-        let image = renderer.image { _ in
-            window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
-        }
-
-        return image
-    }
-}
-
-
 struct ContentView: View {
+    // 設定画面表示フラグ
+    @State private var isShowingSettingListView = false
+    
     // シェア画面表示フラグ
     @State private var isShowingShareSheet = false
-        
+    
     var body: some View {
         NavigationView {
-            VStack {
-                // アプリ名
-                Text("You're NonSmoker")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+            ZStack {
+                // 背景
+                Color.black
+                    .edgesIgnoringSafeArea(.all)
+                
+                //　メイン
+                VStack {
+                    // 設定ボタン
+                    HStack   {
+                        Spacer()
+                        NavigationLink(destination: SettingItemsView()) {
+                            Image(systemName: "ellipsis")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .frame(width: 50, height: 50)
+                                .background(Color.white.opacity(0.2))
+                                .padding()
+                        }
+                    }
                     .padding()
-                
-                // 上部ボタン
-                NavigationLink(destination: SettingView()) {
-                    Image(systemName: "gearshape.fill")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding()
+                    
                     Spacer()
-                }
-                
-                Spacer()
-                
-                DataView()
-                
-                
-                // シェアボタン
-                Button(action: {
-                    // シェアシート表示フラグ
-                    isShowingShareSheet = true
-                }) {
-                    Text("Share")
-                        .font(.title)
+                    
+                    // アプリ名
+                    Text("NS365")
+                        .foregroundColor(Color.white)
+                        .font(.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
                         .padding()
-                        .frame(width: 150, height: 50)
-                        .background(Color.blue)
-                        .cornerRadius(15.0)
+                    
+                    // 詳細データ
+                    DataView()
+                        .frame(width: 350)
+                        .foregroundColor(.white)
+                        .border(Color.white, width: 3)
+                        .padding()
+                    
+                    Spacer()
+                    
+                    // シェアボタン
+                    Button(action: {
+                        // シェア画面表示フラグ
+                        isShowingShareSheet = true
+                    }) {
+                        Text("Share")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .frame(width: 150, height: 50)
+                            .background(Color.white.opacity(0.2))
+                            .border(Color.white, width: 3)
+                            .cornerRadius(8.0)
+                            .padding()
+                    }
+                    .padding()
+                    
+                    Spacer()
                     
                 }
-                .padding()
-                
-            }
-            .sheet(isPresented: $isShowingShareSheet) {
-                ShareSheet()
+                // シェア画面表示
+                .sheet(isPresented: $isShowingShareSheet) {
+                    ShareSheet()
+                }
             }
         }
     }
 }
-
 
 
 
