@@ -8,59 +8,61 @@
 import SwiftUI
 
 struct DateSettingView: View {
-    
+    // モーダル表示フラグ
+    @Binding var isShowDateSetting: Bool
+
     // 選択された日付
     @State var selectedDate = Date()
+
+    // AppStorageの初期値
+    @AppStorage("startYear") var startYear: Int = 2023
+    @AppStorage("startMonth") var startMonth: Int = 2
+    @AppStorage("startDay") var startDay: Int = 1
+    @AppStorage("startHour") var startHour: Int = 0
+    @AppStorage("startMinute") var startMinute: Int = 0
     
-    // 日付をフォーマットする関数
-    func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter.string(from: date)
-    }
-    
-    // 選択した日付と現在時刻の差分を計算する関数
-    func timeDifference(_ selectedDate: Date, _ currentDate: Date) -> String {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.day, .hour, .minute], from: selectedDate, to: currentDate)
-        
-        guard let days = components.day,
-              let hours = components.hour,
-              let minutes = components.minute else {
-            return "Invalid date"
-        }
-        
-        return String(format: "%02dd %02dh %02dm", days, hours, minutes)
-    }
-    
-    // モーダルを閉じるための変数
-    @Binding var isShowDateSetting: Bool
-        
+
     var body: some View {
         NavigationView {
             VStack {
+                Text("\(selectedDate)")
+                    .font(.body)
+                    .padding()
+                
+                // 選択した値をselectedDateとする
                 DatePicker(
-                    selection: $selectedDate,
-                    label: { Text("禁煙開始日") }
+                    "禁煙開始日",
+                    selection: $selectedDate
                 )
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
+                .datePickerStyle(GraphicalDatePickerStyle())
                 .environment(\.locale, Locale(identifier: "ja_JP"))
-                .padding()
-                
-                
-                
-                Text("Selected Date: \(formattedDate(selectedDate))")
-                Text("Time Difference: \(timeDifference(selectedDate, Date()))")
-                
-                
+                // 表示されたらAppStorageの値を読み込ん表示する
+                .onAppear {
+                    let components = DateComponents(
+                        calendar: Calendar.current,
+                        timeZone: TimeZone.current,
+                        year: startYear,
+                        month: startMonth,
+                        day: startDay,
+                        hour:startHour,
+                        minute: startMinute
+                    )
+                    selectedDate = components.date!
+                }
+
                 // 保存ボタン
                 Button(action: {
                     // モーダルを閉じる
                     self.isShowDateSetting = false
-                    // 保存処理(AppStorage)
-                    UserDefaults.standard.set(selectedDate, forKey: "selectedDate")
+
+                    // 選択した日付をAppStorageに保存
+                    let calendar = Calendar.current
+                    let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedDate)
+                    startYear = components.year!
+                    startMonth = components.month!
+                    startDay = components.day!
+                    startHour = components.hour!
+                    startMinute = components.minute!
                 }) {
                     Text("保存")
                         .frame(width: 200, height: 60)
@@ -75,8 +77,8 @@ struct DateSettingView: View {
     }
 }
 
-//struct DateSettingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DateSettingView()
-//    }
-//}
+struct DateSettingView_Previews: PreviewProvider {
+    static var previews: some View {
+        DateSettingView(isShowDateSetting: .constant(false))
+    }
+}

@@ -21,47 +21,59 @@ struct DataView: View {
         "未来のために禁煙しよう！",
         "タバコはさよなら、元気をハロー！"
     ]
+        
     
-    // カレンダー
-    private let calendar = Calendar.current
+    // AppStorageの値を読み込む
+    @AppStorage("startYear") var startYear: Int = 2023
+    @AppStorage("startMonth") var startMonth: Int = 2
+    @AppStorage("startDay") var startDay: Int = 1
+    @AppStorage("startHour") var startHour: Int = 0
+    @AppStorage("startMinute") var startMinute: Int = 0
+    
+        
     // 禁煙開始日
-    private let dateComponents = DateComponents(year: 2023, month: 2, day: 1, hour: 0, minute: 0)
+    private var dateComponents: DateComponents {
+        DateComponents(year: startYear, month: startMonth, day: startDay, hour: startHour, minute: startMinute)
+    }
+    
+    
+    
+//    private let dateComponents = DateComponents(year: 2023, month: 2, day: 1, hour: 0, minute: 0)
     
     
     // 経過時間の計算
     private func calculateElapsedTime() -> String {
-        let date = calendar.date(from: dateComponents) ?? Date()
+        let date = Calendar.current.date(from: dateComponents) ?? Date()
         let now = Date()
-        
-        let components = calendar.dateComponents([.day, .hour, .minute], from: date, to: now)
+
+        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: date, to: now)
         let days = components.day ?? 0
         let hours = components.hour ?? 0
         let minutes = components.minute ?? 0
-        
+
         return String(format: "%02dd %02dh %02dm", days, hours, minutes)
     }
-    
-        
-    // 禁煙できた本数の計算
+
+    // 禁煙本数の計算
     private func calculateNonSmokingCount() -> Int {
         // 1日に吸っていた本数
-        let numberPerDay = 12
+        let numberPerDay = numberPerDay
         
         // 経過日数
-        let date = calendar.date(from: dateComponents) ?? Date()
-        let days = calendar.dateComponents([.day], from: date, to: Date()).day ?? 0
+        let date = Calendar.current.date(from: dateComponents) ?? Date()
+        let days = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
         
         return numberPerDay * days
     }
     
     
-    // 節約できた金額の計算
+    // 節約金額の計算
     private func money() -> Int {
         // 1箱の値段
-        let pricePerBox = 600
+        let pricePerBox = pricePerBox
         
         // 1箱の本数
-        let numberPerBox = 20
+        let numberPerBox = numberPerBox
         
         // 1本あたりの値段
         let pricePerOne = pricePerBox / numberPerBox
@@ -73,13 +85,13 @@ struct DataView: View {
     
     // 延びた寿命の計算
     private func calculateExtendedLife() -> Int {
-        // 1本吸うごとに減る寿命
+        // 1本吸うごとに減る寿命（分）
         let lifespanPerCigarette = 5
         // 1日に吸っていた本数
-        let cigarettesPerDay = 12
+        let cigarettesPerDay = numberPerDay
         // 経過日数
-        let date = calendar.date(from: dateComponents) ?? Date()
-        let days = calendar.dateComponents([.day], from: date, to: Date()).day ?? 0
+        let date = Calendar.current.date(from: dateComponents) ?? Date()
+        let days = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
         // 延びた寿命（分）
         let extendedLifespan = lifespanPerCigarette * cigarettesPerDay * days
         // 延びた寿命（時間）
@@ -88,15 +100,15 @@ struct DataView: View {
         return extendedLifeInHours
     }
     
+
     // 1日の喫煙本数
     @AppStorage("numberPerDay_key") var numberPerDay: Int = 9
-    
     // 1箱の値段
-    @AppStorage("pricePerBox_key") var pricePerBox: Int = 599
-    
+    @AppStorage("pricePerBox_key") var pricePerBox: Int = 590
     // 1箱の本数
     @AppStorage("numberPerBox_key") var numberPerBox: Int = 19
     
+
     
     var body: some View {
         // データ表示

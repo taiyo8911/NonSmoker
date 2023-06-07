@@ -17,21 +17,23 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // 背景
+                // 背景を塗りつぶす
                 Color.black
                     .edgesIgnoringSafeArea(.all)
                 
-                //　メイン
+                //　ビューを縦並びに配置
                 VStack {
-                    // 設定ボタン
+                    // ビューを横並びに配置
                     HStack   {
                         Spacer()
+                        // ナビゲーション
                         NavigationLink(destination: SettingItemsView()) {
                             Image(systemName: "ellipsis")
-                                .font(.title)
+                                .font(.headline)
                                 .foregroundColor(.white)
                                 .frame(width: 50, height: 50)
-                                .background(Color.white.opacity(0.2))
+                                .background(Color.white.opacity(0.1))
+                                .cornerRadius(8.0)
                                 .padding()
                         }
                     }
@@ -39,7 +41,6 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    // アプリ名
                     Text("NS365")
                         .foregroundColor(Color.white)
                         .font(.largeTitle)
@@ -65,17 +66,16 @@ struct ContentView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .frame(width: 150, height: 50)
-                            .background(Color.white.opacity(0.2))
-                            .border(Color.white, width: 3)
+                            .background(Color.white.opacity(0.1))
+                            .border(Color.white, width: 2)
                             .cornerRadius(8.0)
                             .padding()
                     }
                     .padding()
                     
                     Spacer()
-                    
                 }
-                // シェア画面表示
+                // シェア画面をモーダル表示
                 .sheet(isPresented: $isShowingShareSheet) {
                     ShareSheet()
                 }

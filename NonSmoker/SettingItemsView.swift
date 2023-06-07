@@ -32,7 +32,7 @@ struct SettingItemsView: View {
                 
                 Button {
                     isShowRecords.toggle()
-                
+                    
                 } label: {
                     Text("その他設定")
                         .padding()
@@ -40,7 +40,7 @@ struct SettingItemsView: View {
                 .sheet(isPresented: $isShowRecords) {
                     RecordsSettingView(isRecordsShow: $isShowRecords)
                 }
-                                
+                
                 Button {
                     isShowAlert = true
                 } label: {
@@ -54,12 +54,12 @@ struct SettingItemsView: View {
                         title: Text("リセットしますか？"),
                         primaryButton: .cancel(Text("キャンセル")),
                         secondaryButton: .destructive(Text("リセット"),
-                                                      action:
-                                                        {
-                                                            print("リセット")
-                                                            let appDomain = Bundle.main.bundleIdentifier
-                                                            UserDefaults.standard.removePersistentDomain(forName: appDomain!)
-                                                        })
+                                                      action:{
+                                                          print("リセット")
+                                                          let appDomain = Bundle.main.bundleIdentifier
+                                                          UserDefaults.standard.removePersistentDomain(forName: appDomain!)
+                                                      }
+                                                     )
                     )
                 }
             }

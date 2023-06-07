@@ -8,26 +8,18 @@
 import SwiftUI
 
 struct RecordsSettingView: View {
-    // 1日の本数
-//    @State private var numberPerDay: Int = 12
-    
-    // 一箱の値段
-//    @State private var pricePerBox: Int = 600
-    
-    
-    // モーダルを閉じるための変数
+    // モーダル表示フラグ
     @Binding var isRecordsShow: Bool
 
     // 1日の喫煙本数
     @AppStorage("numberPerDay_key") var numberPerDay: Int = 9
     
     // 1箱の値段
-    @AppStorage("pricePerBox_key") var pricePerBox: Int = 599
+    @AppStorage("pricePerBox_key") var pricePerBox: Int = 590
     
     // 1箱の本数
     @AppStorage("numberPerBox_key") var numberPerBox: Int = 19
     
-        
     
     var body: some View {
         NavigationView {
@@ -35,10 +27,9 @@ struct RecordsSettingView: View {
                 Group {
                     Text("1日何本吸っていましたか？")
                         .font(.title2)
-                    
+
                     Stepper(value: $numberPerDay, in: 1...99, step: 1) {
-//                        Text("\(numberPerDay)本")
-                        Text("\(UserDefaults.standard.integer(forKey: "numberPerDay_key"))")
+                        Text("\(UserDefaults.standard.integer(forKey: "numberPerDay_key"))本")
                     }
                 }
                 .padding()
@@ -49,7 +40,6 @@ struct RecordsSettingView: View {
                         .font(.title2)
                     
                     Stepper(value: $pricePerBox, in: 200...990, step: 10) {
-//                        Text("\(pricePerBox)円")
                         Text("\(UserDefaults.standard.integer(forKey: "pricePerBox_key"))円")
                     }
                 }
@@ -61,23 +51,20 @@ struct RecordsSettingView: View {
                         .font(.title2)
                     
                     Stepper(value: $numberPerBox, in: 10...40, step: 1) {
-//                        Text("\(pricePerBox)円")
                         Text("\(UserDefaults.standard.integer(forKey: "numberPerBox_key"))本")
                     }
                 }
                 .padding()
                 
                 
-                
                 // 保存ボタン
                 Button(action: {
                     // モーダルを閉じる
-                    isRecordsShow   = false
+                    isRecordsShow = false
                     // 保存処理
                     UserDefaults.standard.set(numberPerDay, forKey: "numberPerDay")
                     UserDefaults.standard.set(pricePerBox, forKey: "pricePerBox")
                     UserDefaults.standard.set(numberPerBox, forKey: "numberPerBox")
-
                 }) {
                     Text("保存")
                         .font(.title)
@@ -87,13 +74,14 @@ struct RecordsSettingView: View {
                         .cornerRadius(10)
                 }
             }
+            .navigationBarTitle("その他設定")
         }
-        .navigationTitle("その他設定")
     }
 }
 
-//struct RecordsSettingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        RecordsSettingView()
-//    }
-//}
+struct RecordsSettingView_Previews: PreviewProvider {
+    static var previews: some View {
+        RecordsSettingView(isRecordsShow: .constant(false))
+    
+    }
+}
