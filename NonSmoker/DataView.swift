@@ -8,122 +8,82 @@
 import SwiftUI
 
 struct DataView: View {
-    // メッセージ
-    let messages = [
-        "禁煙は健康への第一歩！",
-        "吸わない自分に誇りを！",
-        "タバコを断って自由に！",
-        "禁煙で新たな始まり！",
-        "たばこなし、明るい未来！",
-        "タバコを忘れて笑おう！",
-        "禁煙で新しい自分へ！",
-        "煙を消し、健康を手に！",
-        "未来のために禁煙しよう！",
-        "タバコはさよなら、元気をハロー！"
-    ]
-        
-    
     // AppStorageの値を読み込む
     @AppStorage("startYear") var startYear: Int = 2023
     @AppStorage("startMonth") var startMonth: Int = 2
     @AppStorage("startDay") var startDay: Int = 1
     @AppStorage("startHour") var startHour: Int = 0
     @AppStorage("startMinute") var startMinute: Int = 0
+    @AppStorage("startSecond") var startSecond: Int = 0
     
-        
     // 禁煙開始日
-    private var dateComponents: DateComponents {
-        DateComponents(year: startYear, month: startMonth, day: startDay, hour: startHour, minute: startMinute)
+    private var startDate: Date {
+        Calendar.current.date(from: DateComponents(year: startYear, month: startMonth, day: startDay, hour: startHour, minute: startMinute, second: startSecond)) ?? Date()
     }
     
+    // 経過時間
+    @State private var elapsedTime: String = ""
     
-    
-//    private let dateComponents = DateComponents(year: 2023, month: 2, day: 1, hour: 0, minute: 0)
-    
-    
-    // 経過時間の計算
-    private func calculateElapsedTime() -> String {
-        let date = Calendar.current.date(from: dateComponents) ?? Date()
-        let now = Date()
-
-        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: date, to: now)
+    func updateElapsedTime() {
+        let components = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: startDate, to: Date())
         let days = components.day ?? 0
         let hours = components.hour ?? 0
         let minutes = components.minute ?? 0
-
-        return String(format: "%02dd %02dh %02dm", days, hours, minutes)
+        let seconds = components.second ?? 0
+        elapsedTime = String(format: "%02dd %02dh %02dm %02ds", days, hours, minutes, seconds)
     }
-
-    // 禁煙本数の計算
-    private func calculateNonSmokingCount() -> Int {
+    
+    
+    // 禁煙本数
+    @State private var nonSmokingCount: Int = 0
+    
+    func updateNonSmokingCount() {
         // 1日に吸っていた本数
-        let numberPerDay = numberPerDay
-        
+        let numberPerDay = UserDefaults.standard.integer(forKey: "numberPerDay_key")
         // 経過日数
-        let date = Calendar.current.date(from: dateComponents) ?? Date()
-        let days = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
-        
-        return numberPerDay * days
+        let days = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
+        nonSmokingCount = Int(numberPerDay * days)
     }
     
+    // 節約金額
+    @State private var savedMoney: Int = 0
     
-    // 節約金額の計算
-    private func money() -> Int {
+    func updateSavedMoney() {
         // 1箱の値段
-        let pricePerBox = pricePerBox
-        
+        let pricePerBox = UserDefaults.standard.integer(forKey: "pricePerBox_key")
         // 1箱の本数
-        let numberPerBox = numberPerBox
-        
+        let numberPerBox = UserDefaults.standard.integer(forKey: "numberPerBox_key")
         // 1本あたりの値段
         let pricePerOne = pricePerBox / numberPerBox
-        
-        // 節約金額
-        return pricePerOne * calculateNonSmokingCount()
+        savedMoney = pricePerOne * nonSmokingCount
     }
     
+    // 延びた寿命
+    @State private var extendedLife: Int = 0
     
-    // 延びた寿命の計算
-    private func calculateExtendedLife() -> Int {
+    func updateExtendedLife() {
         // 1本吸うごとに減る寿命（分）
         let lifespanPerCigarette = 5
         // 1日に吸っていた本数
-        let cigarettesPerDay = numberPerDay
+        let cigarettesPerDay = UserDefaults.standard.integer(forKey: "numberPerDay_key")
         // 経過日数
-        let date = Calendar.current.date(from: dateComponents) ?? Date()
-        let days = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
+        let days = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
         // 延びた寿命（分）
         let extendedLifespan = lifespanPerCigarette * cigarettesPerDay * days
         // 延びた寿命（時間）
         let extendedLifeInHours = extendedLifespan / 60
-        
-        return extendedLifeInHours
+        extendedLife = extendedLifeInHours
     }
-    
-
-    // 1日の喫煙本数
-    @AppStorage("numberPerDay_key") var numberPerDay: Int = 9
-    // 1箱の値段
-    @AppStorage("pricePerBox_key") var pricePerBox: Int = 590
-    // 1箱の本数
-    @AppStorage("numberPerBox_key") var numberPerBox: Int = 19
-    
-
+   
     
     var body: some View {
         // データ表示
         VStack {
-            // メッセージをランダムに表示
-            Text(messages.randomElement()!)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding()
-            
             // 経過時間を表示
             Label(
                 title: {
-                    Text("\(calculateElapsedTime())")
-                        .fontWeight(.bold)
+                    Text("\(elapsedTime)")
+                        .font(Font(UIFont.monospacedSystemFont(ofSize: 15, weight: .bold)))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 },
                 icon: {
@@ -132,12 +92,12 @@ struct DataView: View {
                 }
             )
             .padding()
-
+            
             // 本数を表示
             Label(
                 title: {
-                    Text("\(calculateNonSmokingCount()) cigs")
-                        .fontWeight(.bold)
+                    Text("\(nonSmokingCount) cigs")
+                        .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .bold)))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 },
                 icon: {
@@ -146,28 +106,27 @@ struct DataView: View {
                 }
             )
             .padding()
-
+            
             
             // 節約できた金額表示
             Label(
                 title: {
-                    Text("\(money()) yen")
-                        .fontWeight(.bold)
+                    Text("\(savedMoney) yen")
+                        .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .bold)))
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                    
                 },
                 icon: {
                     Text("💲")
                 }
             )
             .padding()
-
+            
             
             // 延びた寿命を表示
             Label(
                 title: {
-                    Text("\(calculateExtendedLife()) hours")
-                        .fontWeight(.bold)
+                    Text("\(extendedLife) hours")
+                        .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .bold)))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 },
                 icon: {
@@ -176,6 +135,15 @@ struct DataView: View {
                 }
             )
             .padding()
+        }
+        // ビューが描画されたら1秒おきにelapsedTimeを更新する
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                updateElapsedTime()
+                updateNonSmokingCount()
+                updateSavedMoney()
+                updateExtendedLife()
+            }
         }
     }
 }

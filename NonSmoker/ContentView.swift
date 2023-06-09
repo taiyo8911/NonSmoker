@@ -41,9 +41,10 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    Text("NS365")
+                    // メッセージ
+                    MessageView()
                         .foregroundColor(Color.white)
-                        .font(.largeTitle)
+                        .font(.title)
                         .fontWeight(.bold)
                         .padding()
                     
@@ -62,7 +63,7 @@ struct ContentView: View {
                         isShowingShareSheet = true
                     }) {
                         Text("Share")
-                            .font(.title)
+                            .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .frame(width: 150, height: 50)

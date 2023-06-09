@@ -17,29 +17,44 @@ struct SettingItemsView: View {
     // アラート表示フラグ
     @State private var isShowAlert = false
     
+    
+    @State private var isShowSetting = false
+    
+    
+    
     var body: some View {
         NavigationView {
             List {
                 Button {
-                    isShowDateSetting.toggle()
+                    isShowSetting.toggle()
                 } label: {
-                    Text("日時設定")
+                    Text("各種設定")
                         .padding()
                 }
-                .sheet(isPresented: $isShowDateSetting) {
-                    DateSettingView(isShowDateSetting: $isShowDateSetting)
+                .sheet(isPresented: $isShowSetting) {
+                    SettingView(isShowSetting: $isShowSetting)
                 }
                 
-                Button {
-                    isShowRecords.toggle()
-                    
-                } label: {
-                    Text("その他設定")
-                        .padding()
-                }
-                .sheet(isPresented: $isShowRecords) {
-                    RecordsSettingView(isRecordsShow: $isShowRecords)
-                }
+//                Button {
+//                    isShowDateSetting.toggle()
+//                } label: {
+//                    Text("日時設定")
+//                        .padding()
+//                }
+//                .sheet(isPresented: $isShowDateSetting) {
+//                    DateSettingView(isShowDateSetting: $isShowDateSetting)
+//                }
+//
+//                Button {
+//                    isShowRecords.toggle()
+//
+//                } label: {
+//                    Text("その他設定")
+//                        .padding()
+//                }
+//                .sheet(isPresented: $isShowRecords) {
+//                    RecordsSettingView(isRecordsShow: $isShowRecords)
+//                }
                 
                 Button {
                     isShowAlert = true
