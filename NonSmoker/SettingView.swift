@@ -1,5 +1,5 @@
 //
-//  SettingView2.swift
+//  SettingView.swift
 //  NonSmoker
 //
 //  Created by Taiyo Koshiba on 2023/06/13.
