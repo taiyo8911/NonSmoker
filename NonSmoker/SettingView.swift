@@ -34,20 +34,20 @@ struct SettingView: View {
         NavigationView {
             VStack {
                 Group {
-                    Text("禁煙開始日")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    
+//                    Text("禁煙開始日")
+//                        .font(.body)
+//                        .fontWeight(.bold)
+//
                     // 選択した値をselectedDateとする
                     DatePicker(
-                        "",
+                        "禁煙開始日",
                         selection: $selectedDate
                     )
                     .datePickerStyle(CompactDatePickerStyle())
-                    .labelsHidden()
                     .clipped()
                     .environment(\.locale, Locale(identifier: "ja_JP"))
-                    
+                    .fontWeight(.bold)
+
                     // ビューが表示されたらAppStorageの値を読み込んで表示する
                     .onAppear {
                         let components = DateComponents(
@@ -62,43 +62,36 @@ struct SettingView: View {
                         selectedDate = components.date!
                     }
                 }
-                .padding()
                 
                 Group {
                     Text("1日何本吸っていましたか？")
-                        .font(.title2)
+                        .font(.body)
                         .fontWeight(.bold)
                     
                     Stepper(value: $numberPerDay, in: 1...99, step: 1) {
                         Text("\(UserDefaults.standard.integer(forKey: "numberPerDay"))本")
                     }
                 }
-                .padding()
-                
                 
                 Group {
                     Text("1箱の値段は？")
-                        .font(.title2)
+                        .font(.body)
                         .fontWeight(.bold)
                     
                     Stepper(value: $pricePerBox, in: 200...990, step: 10) {
                         Text("\(UserDefaults.standard.integer(forKey: "pricePerBox"))円")
                     }
                 }
-                .padding()
-                
                 
                 Group {
                     Text("1箱の本数は？")
-                        .font(.title2)
+                        .font(.body)
                         .fontWeight(.bold)
                     
                     Stepper(value: $numberPerBox, in: 10...40, step: 1) {
                         Text("\(UserDefaults.standard.integer(forKey: "numberPerBox"))本")
                     }
                 }
-                .padding()
-                
                 
                 // 保存ボタン
                 Button(action: {
