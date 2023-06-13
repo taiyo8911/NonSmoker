@@ -12,9 +12,10 @@ struct ContentView: View {
     @AppStorage("isSettingCompleted") var isSettingCompleted: Bool = false
     
     var body: some View {
+        // 初期設定が完了している場合はメイン画面を表示
         if isSettingCompleted {
             MainView()
-        } else {
+        } else { // 初期設定が完了していない場合は初期設定画面を表示
             SettingView(isShowSetting: .constant(true), isSettingCompleted: $isSettingCompleted)
         }
     }
