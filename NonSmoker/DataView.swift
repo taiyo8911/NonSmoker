@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct DataView: View {
-    // AppStorageの値を読み込む
-    @AppStorage("startYear") var startYear: Int = 2023
-    @AppStorage("startMonth") var startMonth: Int = 2
-    @AppStorage("startDay") var startDay: Int = 1
-    @AppStorage("startHour") var startHour: Int = 0
-    @AppStorage("startMinute") var startMinute: Int = 0
-    @AppStorage("startSecond") var startSecond: Int = 0
+    
+    @AppStorage("startYear") var startYear = Calendar.current.component(.year, from: Date())
+    @AppStorage("startMonth") var startMonth = Calendar.current.component(.month, from: Date())
+    @AppStorage("startDay") var startDay = Calendar.current.component(.day, from: Date())
+    @AppStorage("startHour") var startHour = Calendar.current.component(.hour, from: Date())
+    @AppStorage("startMinute") var startMinute = Calendar.current.component(.minute, from: Date())
+    @AppStorage("startSecond") var startSecond = 0
+    
+    
     
     // 禁煙開始日
     private var startDate: Date {
@@ -39,7 +41,7 @@ struct DataView: View {
     
     func updateNonSmokingCount() {
         // 1日に吸っていた本数
-        let numberPerDay = UserDefaults.standard.integer(forKey: "numberPerDay_key")
+        let numberPerDay = UserDefaults.standard.integer(forKey: "numberPerDay")
         // 経過日数
         let days = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
         nonSmokingCount = Int(numberPerDay * days)
@@ -50,31 +52,18 @@ struct DataView: View {
     
     func updateSavedMoney() {
         // 1箱の値段
-        let pricePerBox = UserDefaults.standard.integer(forKey: "pricePerBox_key")
+        let pricePerBox = UserDefaults.standard.integer(forKey: "pricePerBox")
         // 1箱の本数
-        let numberPerBox = UserDefaults.standard.integer(forKey: "numberPerBox_key")
+        let numberPerBox = UserDefaults.standard.integer(forKey: "numberPerBox")
         // 1本あたりの値段
+        if numberPerBox == 0 {
+            return
+        }
+        
         let pricePerOne = pricePerBox / numberPerBox
         savedMoney = pricePerOne * nonSmokingCount
     }
     
-    // 延びた寿命
-    @State private var extendedLife: Int = 0
-    
-    func updateExtendedLife() {
-        // 1本吸うごとに減る寿命（分）
-        let lifespanPerCigarette = 5
-        // 1日に吸っていた本数
-        let cigarettesPerDay = UserDefaults.standard.integer(forKey: "numberPerDay_key")
-        // 経過日数
-        let days = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
-        // 延びた寿命（分）
-        let extendedLifespan = lifespanPerCigarette * cigarettesPerDay * days
-        // 延びた寿命（時間）
-        let extendedLifeInHours = extendedLifespan / 60
-        extendedLife = extendedLifeInHours
-    }
-   
     
     var body: some View {
         // データ表示
@@ -122,27 +111,14 @@ struct DataView: View {
             .padding()
             
             
-            // 延びた寿命を表示
-            Label(
-                title: {
-                    Text("\(extendedLife) hours")
-                        .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .bold)))
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                },
-                icon: {
-                    Text("💓")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-            )
-            .padding()
         }
-        // ビューが描画されたら1秒おきにelapsedTimeを更新する
+        // ビューが描画されたら
         .onAppear {
+            // 1秒おきに値を更新する
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 updateElapsedTime()
                 updateNonSmokingCount()
                 updateSavedMoney()
-                updateExtendedLife()
             }
         }
     }

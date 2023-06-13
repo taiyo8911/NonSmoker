@@ -1,36 +1,34 @@
 //
-//  SettingView.swift
+//  SettingView2.swift
 //  NonSmoker
 //
-//  Created by Taiyo Koshiba on 2023/06/09.
+//  Created by Taiyo Koshiba on 2023/06/13.
 //
 
 import SwiftUI
 
 struct SettingView: View {
-    // モーダル表示フラグ
-    @Binding var isShowSetting: Bool
-
-    // 1日の喫煙本数
-    @AppStorage("numberPerDay_key") var numberPerDay: Int = 9
+    // 初期値の設定
+    // 禁煙開始日
+    @AppStorage("startYear") var startYear: Int = Calendar.current.component(.year, from: Date())
+    @AppStorage("startMonth") var startMonth: Int = Calendar.current.component(.month, from: Date())
+    @AppStorage("startDay") var startDay: Int = Calendar.current.component(.day, from: Date())
+    @AppStorage("startHour") var startHour: Int = Calendar.current.component(.hour, from: Date())
+    @AppStorage("startMinute") var startMinute: Int = Calendar.current.component(.minute, from: Date())
+    @AppStorage("startSecond") var startSecond: Int = 0
     
-    // 1箱の値段
-    @AppStorage("pricePerBox_key") var pricePerBox: Int = 590
-    
-    // 1箱の本数
-    @AppStorage("numberPerBox_key") var numberPerBox: Int = 19
-    
-    
-    // AppStorageの初期値
-    @AppStorage("startYear") var startYear: Int = 2023
-    @AppStorage("startMonth") var startMonth: Int = 2
-    @AppStorage("startDay") var startDay: Int = 1
-    @AppStorage("startHour") var startHour: Int = 0
-    @AppStorage("startMinute") var startMinute: Int = 0
+    @AppStorage("numberPerDay") var numberPerDay = 10 // 1日の喫煙本数
+    @AppStorage("pricePerBox") var pricePerBox = 600 // 1箱の値段
+    @AppStorage("numberPerBox") var numberPerBox = 20 // 1箱の本数
     
     // 選択された日付
     @State var selectedDate = Date()
     
+    // モーダルを閉じるフラグ
+    @Binding var isShowSetting: Bool
+
+    // 設定が完了したら値を保存してメイン画面に戻るフラグ
+    @Binding var isSettingCompleted: Bool
     
     var body: some View {
         NavigationView {
@@ -38,6 +36,7 @@ struct SettingView: View {
                 Group {
                     Text("禁煙開始日")
                         .font(.title2)
+                        .fontWeight(.bold)
                     
                     // 選択した値をselectedDateとする
                     DatePicker(
@@ -48,6 +47,7 @@ struct SettingView: View {
                     .labelsHidden()
                     .clipped()
                     .environment(\.locale, Locale(identifier: "ja_JP"))
+                    
                     // ビューが表示されたらAppStorageの値を読み込んで表示する
                     .onAppear {
                         let components = DateComponents(
@@ -67,9 +67,10 @@ struct SettingView: View {
                 Group {
                     Text("1日何本吸っていましたか？")
                         .font(.title2)
-
+                        .fontWeight(.bold)
+                    
                     Stepper(value: $numberPerDay, in: 1...99, step: 1) {
-                        Text("\(UserDefaults.standard.integer(forKey: "numberPerDay_key"))本")
+                        Text("\(UserDefaults.standard.integer(forKey: "numberPerDay"))本")
                     }
                 }
                 .padding()
@@ -78,9 +79,10 @@ struct SettingView: View {
                 Group {
                     Text("1箱の値段は？")
                         .font(.title2)
+                        .fontWeight(.bold)
                     
                     Stepper(value: $pricePerBox, in: 200...990, step: 10) {
-                        Text("\(UserDefaults.standard.integer(forKey: "pricePerBox_key"))円")
+                        Text("\(UserDefaults.standard.integer(forKey: "pricePerBox"))円")
                     }
                 }
                 .padding()
@@ -89,9 +91,10 @@ struct SettingView: View {
                 Group {
                     Text("1箱の本数は？")
                         .font(.title2)
+                        .fontWeight(.bold)
                     
                     Stepper(value: $numberPerBox, in: 10...40, step: 1) {
-                        Text("\(UserDefaults.standard.integer(forKey: "numberPerBox_key"))本")
+                        Text("\(UserDefaults.standard.integer(forKey: "numberPerBox"))本")
                     }
                 }
                 .padding()
@@ -101,19 +104,24 @@ struct SettingView: View {
                 Button(action: {
                     // モーダルを閉じる
                     isShowSetting = false
+                    
                     // 保存処理
                     UserDefaults.standard.set(numberPerDay, forKey: "numberPerDay")
                     UserDefaults.standard.set(pricePerBox, forKey: "pricePerBox")
                     UserDefaults.standard.set(numberPerBox, forKey: "numberPerBox")
                     
-                    // 選択した日付をAppStorageに保存
                     let calendar = Calendar.current
                     let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedDate)
-                    startYear = components.year!
-                    startMonth = components.month!
-                    startDay = components.day!
-                    startHour = components.hour!
-                    startMinute = components.minute!
+                    UserDefaults.standard.set(components.year, forKey: "startYear")
+                    UserDefaults.standard.set(components.month, forKey: "startMonth")
+                    UserDefaults.standard.set(components.day, forKey: "startDay")
+                    UserDefaults.standard.set(components.hour, forKey: "startHour")
+                    UserDefaults.standard.set(components.minute, forKey: "startMinute")
+                  
+                    // 設定が完了フラグを立ててメイン画面を表示する
+//                    UserDefaults.standard.set(true, forKey: "isSettingCompleted")
+
+                    isSettingCompleted = true
                 }) {
                     Text("保存")
                         .font(.title)
@@ -123,13 +131,14 @@ struct SettingView: View {
                         .cornerRadius(10)
                 }
             }
-            .navigationBarTitle("各種設定")
+            .navigationBarTitle("設定")
+            .padding()
         }
     }
 }
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView(isShowSetting: .constant(true))
+        SettingView(isShowSetting: .constant(true), isSettingCompleted: .constant(false))
     }
 }

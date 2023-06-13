@@ -8,54 +8,32 @@
 import SwiftUI
 
 struct SettingItemsView: View {
-    // 日時設定画面遷移フラグ
-    @State private var isShowDateSetting = false
-    
-    // その他設定画面遷移フラグ
-    @State private var isShowRecords = false
-    
     // アラート表示フラグ
     @State private var isShowAlert = false
-    
-    
+
+    // 設定画面の表示フラグ
     @State private var isShowSetting = false
-    
-    
-    
+
+    // 設定完了フラグ
+    @State private var isSettingCompleted = false
+
     var body: some View {
         NavigationView {
             List {
+                // 各種設定ボタン
                 Button {
                     isShowSetting.toggle()
+//                    isSettingCompleted.toggle()
                 } label: {
                     Text("各種設定")
                         .padding()
                 }
                 .sheet(isPresented: $isShowSetting) {
-                    SettingView(isShowSetting: $isShowSetting)
+                    SettingView(isShowSetting: $isShowSetting, isSettingCompleted: $isSettingCompleted)
                 }
                 
-//                Button {
-//                    isShowDateSetting.toggle()
-//                } label: {
-//                    Text("日時設定")
-//                        .padding()
-//                }
-//                .sheet(isPresented: $isShowDateSetting) {
-//                    DateSettingView(isShowDateSetting: $isShowDateSetting)
-//                }
-//
-//                Button {
-//                    isShowRecords.toggle()
-//
-//                } label: {
-//                    Text("その他設定")
-//                        .padding()
-//                }
-//                .sheet(isPresented: $isShowRecords) {
-//                    RecordsSettingView(isRecordsShow: $isShowRecords)
-//                }
-                
+
+                // リセットボタン
                 Button {
                     isShowAlert = true
                 } label: {
@@ -66,15 +44,26 @@ struct SettingItemsView: View {
                 // アラート表示
                 .alert(isPresented: $isShowAlert) {
                     Alert(
-                        title: Text("リセットしますか？"),
-                        primaryButton: .cancel(Text("キャンセル")),
-                        secondaryButton: .destructive(Text("リセット"),
-                                                      action:{
-                                                          print("リセット")
-                                                          let appDomain = Bundle.main.bundleIdentifier
-                                                          UserDefaults.standard.removePersistentDomain(forName: appDomain!)
-                                                      }
-                                                     )
+                        title: Text("リセットしますか？"), primaryButton: .cancel(Text("キャンセル")), secondaryButton: .destructive(Text("リセット"), action:{
+                    
+                            // リセット処理
+                            // ユーザーデフォルトを削除する
+                            let appDomain = Bundle.main.bundleIdentifier
+                            UserDefaults.standard.removePersistentDomain(forName: appDomain!)
+                            
+                            // デフォルト値を再設定する
+                            UserDefaults.standard.set(10, forKey: "numberPerDay")
+                            UserDefaults.standard.set(600, forKey: "pricePerBox")
+                            UserDefaults.standard.set(20, forKey: "numberPerBox")
+                            UserDefaults.standard.set(Calendar.current.component(.year, from: Date()), forKey: "startYear")
+                            UserDefaults.standard.set(Calendar.current.component(.month, from: Date()), forKey: "startMonth")
+                            UserDefaults.standard.set(Calendar.current.component(.day, from: Date()), forKey: "startDay")
+                            UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "startHour")
+                            UserDefaults.standard.set(Calendar.current.component(.minute, from: Date()), forKey: "startMinute")
+                            UserDefaults.standard.set(0, forKey: "startSecond")
+                            
+//                            UserDefaults.standard.set(false, forKey: "isSettingCompleted")
+                        })
                     )
                 }
             }

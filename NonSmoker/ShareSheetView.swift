@@ -13,7 +13,7 @@ struct ShareSheet: UIViewControllerRepresentable {
             fatalError("スクリーンショットの取得に失敗しました。")
         }
         
-        let text = "NS365のスクリーンショット"
+        let text = "#NONSMO"
         let items: [Any] = [text, image]
         let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
         return activityVC
