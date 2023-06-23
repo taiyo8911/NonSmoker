@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     // シェア画面表示フラグ
-    @State private var isShowingShareSheet = false
+    @State private var isShowShareSheet = false
     
     var body: some View {
         NavigationView {
@@ -57,7 +57,7 @@ struct MainView: View {
                     // シェアボタン
                     Button(action: {
                         // シェア画面表示フラグ
-                        isShowingShareSheet = true
+                        isShowShareSheet.toggle()
                     }) {
                         Text("Share")
                             .font(.headline)
@@ -76,7 +76,7 @@ struct MainView: View {
                     Spacer()
                 }
                 // シェア画面をモーダル表示
-                .sheet(isPresented: $isShowingShareSheet) {
+                .sheet(isPresented: $isShowShareSheet) {
                     ShareSheet()
                 }
             }

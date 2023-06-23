@@ -26,41 +26,34 @@ struct SettingView: View {
     
     // モーダルを閉じるフラグ
     @Binding var isShowSetting: Bool
-
+    
     // 設定が完了したら値を保存してメイン画面に戻るフラグ
     @Binding var isSettingCompleted: Bool
-    
+        
     var body: some View {
         NavigationView {
             VStack {
-                Group {
-//                    Text("禁煙開始日")
-//                        .font(.body)
-//                        .fontWeight(.bold)
-//
-                    // 選択した値をselectedDateとする
-                    DatePicker(
-                        "禁煙開始日",
-                        selection: $selectedDate
+                DatePicker(
+                    "禁煙開始日",
+                    selection: $selectedDate
+                )
+                .datePickerStyle(CompactDatePickerStyle())
+                .clipped()
+                .environment(\.locale, Locale(identifier: "ja_JP"))
+                .fontWeight(.bold)
+                
+                // ビューが表示されたらAppStorageの値を読み込んで表示する
+                .onAppear {
+                    let components = DateComponents(
+                        calendar: Calendar.current,
+                        timeZone: TimeZone.current,
+                        year: startYear,
+                        month: startMonth,
+                        day: startDay,
+                        hour:startHour,
+                        minute: startMinute
                     )
-                    .datePickerStyle(CompactDatePickerStyle())
-                    .clipped()
-                    .environment(\.locale, Locale(identifier: "ja_JP"))
-                    .fontWeight(.bold)
-
-                    // ビューが表示されたらAppStorageの値を読み込んで表示する
-                    .onAppear {
-                        let components = DateComponents(
-                            calendar: Calendar.current,
-                            timeZone: TimeZone.current,
-                            year: startYear,
-                            month: startMonth,
-                            day: startDay,
-                            hour:startHour,
-                            minute: startMinute
-                        )
-                        selectedDate = components.date!
-                    }
+                    selectedDate = components.date!
                 }
                 
                 Group {
@@ -110,10 +103,10 @@ struct SettingView: View {
                     UserDefaults.standard.set(components.day, forKey: "startDay")
                     UserDefaults.standard.set(components.hour, forKey: "startHour")
                     UserDefaults.standard.set(components.minute, forKey: "startMinute")
-                  
-                    // 設定が完了フラグを立ててメイン画面を表示する
-//                    UserDefaults.standard.set(true, forKey: "isSettingCompleted")
-
+                    
+                    // 設定完了フラグを立ててメイン画面を表示する
+                    //                    UserDefaults.standard.set(true, forKey: "isSettingCompleted")
+                    
                     isSettingCompleted = true
                 }) {
                     Text("保存")
